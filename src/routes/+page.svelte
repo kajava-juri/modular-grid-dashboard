@@ -1,84 +1,34 @@
 <script lang="ts">
 	import NextStep from '$lib/components/NextStep.svelte';
 	import { trpc } from '$lib/trpc';
+	import DynamicGrid from '$lib/components/DynamicGrid.svelte';
+	import DynamicGridItem from '$lib/components/DynamicGridItem.svelte';
+	import type { GridConfig } from '$types/dynamic-grid';
+	import type { PageData } from './$types';
 
-	const greeting = trpc.greeting.query({ name: 'the o7 stack' });
+	const { data }: { data: PageData } = $props();
+
+	const greeting = trpc.greeting.query({ name: "server side" });
+	const dashboardConfig = data.dashboardConfig;
+
+	console.log(dashboardConfig);
+
+	const gridConfig: GridConfig = {
+		columns: 6,
+		rows: 2
+	}
+
 </script>
 
-<main class="flex h-screen flex-col items-center justify-center">
-	<img src="/favicon.png" class="w-32" alt="o7 Logo" />
-	<!--
-		Notice how there's no flash of `undefined` here: that's because of the
-		SSR in `+page.server.ts`! Try changing the `name` to see the difference.
-	-->
-	<h1 class="text-3xl font-bold">{$greeting.data}</h1>
-	<h2 class="my-6 text-2xl">Next Steps:</h2>
-	<div class="flex max-w-5xl justify-center gap-4 px-3">
-		<NextStep
-			title="Edit this page"
-			learnMore="https://svelte.dev/tutorial/basics"
-		>
-			<p>
-				Edit <code class="text-lime-300">src/routes/+page.svelte</code> to see your
-				changes live.
-			</p>
-			<p>
-				The source for these cards is in <code class="text-lime-300"
-					>src/lib/components/NextStep.svelte</code
-				>.
-			</p>
-			<p>
-				There's some global styling in <code class="text-lime-300"
-					>src/app.css</code
-				>.
-			</p>
-		</NextStep>
-		<NextStep
-			title="Work on your database schema"
-			learnMore="https://www.prisma.io/docs/concepts/components/prisma-schema"
-		>
-			<p>
-				Write a Prisma schema in <code class="text-red-300"
-					>prisma/schema.prisma</code
-				>.
-			</p>
-			<p>
-				Insert your database connection details into <code class="text-red-300"
-					>.env</code
-				>.
-			</p>
-			<p>
-				Run <code class="text-red-300">pnpm db:push</code> to update your database
-				typings.
-			</p>
-			<p>
-				Remember that you're using <a
-					href="https://github.com/kysely-org/kysely"
-					target="_blank"
-					class="text-blue-400 hover:underline">Kysely</a
-				>
-				instead of Prisma to make your queries, and
-				<code class="text-red-300">import {'{ db }'} from '$lib/db'</code>!
-			</p>
-		</NextStep>
-		<NextStep title="Create some tRPC routes" learnMore="https://trpc.io">
-			<p>
-				There's an example query in <code class="text-purple-300"
-					>src/lib/server/routes/_app.ts</code
-				>.
-			</p>
-			<p>
-				Also take a look at <code class="text-purple-300">
-					src/routes/+page.server.ts</code
-				> to see how server-side rendering works!
-			</p>
-		</NextStep>
-	</div>
+<main class="container mx-auto p-4">
+	<h4 class="absolute left-1/2 transform -translate-x-1/2">Dasboard size - {gridConfig.columns} x {gridConfig.rows}</h4>
+	<DynamicGrid config={gridConfig} >
+		{#each dashboardConfig.widgets as widget}
+			<DynamicGridItem widget={widget} />
+		{/each}
+	</DynamicGrid>
 </main>
 
 <style>
-	code {
-		background: theme('colors.zinc.900');
-		padding: theme('spacing[0.5]');
-	}
+
 </style>

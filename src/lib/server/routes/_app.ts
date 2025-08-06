@@ -1,5 +1,14 @@
 import { router, publicProcedure } from '../trpc';
-import { z } from 'zod';
+import { url, z } from 'zod';
+
+const fetcher = async (url: string) => {
+	const res = await fetch(url);
+	if (!res.ok) {
+		throw new Error(`Failed to fetch from ${url}`);
+	}
+
+	return res.json();
+}
 
 export const appRouter = router({
 	greeting: publicProcedure
@@ -10,7 +19,7 @@ export const appRouter = router({
 		)
 		.query(({ input }) => {
 			return `Welcome to ${input.name ?? 'the world'}!`;
-		}),
+		})
 });
 
 export type AppRouter = typeof appRouter;

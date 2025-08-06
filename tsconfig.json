@@ -12,6 +12,16 @@
 		"strict": true,
 		"allowSyntheticDefaultImports": true,
 		"noUncheckedIndexedAccess": true,
-		"moduleResolution": "bundler"
+		"moduleResolution": "bundler",
+		"baseUrl": ".",
+		"paths": {
+			"@/*": ["src/*"],
+			"$lib/*": ["src/lib/*"],
+			"$lib": ["src/lib"],
+			"$types/*": ["src/types/*"],
+			"$types": ["src/types"],
+			"$routes/*": ["src/routes/*"],
+			"$routes": ["src/routes"]
+		}
 	}
 }
