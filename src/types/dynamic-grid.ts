@@ -12,6 +12,7 @@ export type GridItemPosition = {
 export const GridItemTypes = {
     text: 'text',
     chart: 'chart', 
+    line: 'line',
     table: 'table'
 } as const;
 
@@ -32,6 +33,14 @@ export type TextGridItem = GridItem & {
     data: string;
 };
 
+export type LinePlotGridItem = GridItem & {
+    type: typeof GridItemTypes.line;
+    data: {
+        values: number[];
+        xLabel: string;
+        yLabel: string;
+    };
+};
 
 export type DashboardConfig = {
     id: string;

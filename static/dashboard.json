@@ -17,7 +17,7 @@
         },
         {
             "id": "widget-3",
-            "type": "text",
+            "type": "line",
             "data": "Widget 3",
             "size": {
                 "width": 4,
