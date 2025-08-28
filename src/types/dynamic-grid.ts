@@ -1,6 +1,7 @@
 export type GridConfig = {
     columns: number;
     rows: number;
+    isOverlay?: boolean;
 }
 
 export type GridItemPosition = {
@@ -18,6 +19,7 @@ export const GridItemTypes = {
 export type GridItem = {
     id: string;
     type: typeof GridItemTypes[keyof typeof GridItemTypes];
+    data: any; // Based on the type
     name: string;
     size: {
         width: number;

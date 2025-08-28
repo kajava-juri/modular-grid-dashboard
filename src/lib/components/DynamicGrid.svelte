@@ -36,7 +36,7 @@
 	});
 </script>
 
-<div class="w-full p-4">
+<div class={`w-full p-4 ${config.isOverlay ? "absolute" : ""}`}>
 	<div bind:this={gridElement}>
 		{#if mounted}
 			<div
