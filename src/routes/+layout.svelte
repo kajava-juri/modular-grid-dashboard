@@ -6,7 +6,7 @@
 
 	const { data, children } = $props();
 
-	trpc.hydrateFromServer(() => data.trpc);
+	//trpc.hydrateFromServer(() => data.trpc);
 
 
 </script>

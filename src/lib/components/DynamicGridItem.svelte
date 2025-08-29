@@ -11,7 +11,6 @@
     onMount(() => {
         interval = setInterval(() => {
             data = [...data.slice(-199), Math.random() * 4 - 2];
-            console.log(data);
         }, 50);
         return () => clearInterval(interval);
     });

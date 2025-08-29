@@ -1,3 +1,4 @@
+import EventEmitter, { on } from 'events';
 import { router, publicProcedure } from '../trpc';
 import { url, z } from 'zod';
 
@@ -10,6 +11,8 @@ const fetcher = async (url: string) => {
 	return res.json();
 }
 
+const ee = new EventEmitter();
+
 export const appRouter = router({
 	greeting: publicProcedure
 		.input(
@@ -19,7 +22,25 @@ export const appRouter = router({
 		)
 		.query(({ input }) => {
 			return `Welcome to ${input.name ?? 'the world'}!`;
-		})
+		}),
+	randomNumber: publicProcedure
+	.input(z.string())
+	.subscription(async function* (opts) {
+		while(!opts.signal?.aborted) {
+			let data;
+			if(opts.input == "test") {
+				data = Math.random() * 100;
+			}
+			else if(opts.input == "data") {
+				data = "some data";
+			}
+			yield {
+				value: data,
+				timestamp: Date.now(),
+			};
+			await new Promise((resolve) => setTimeout(resolve, 200));
+		}
+	})
 });
 
 export type AppRouter = typeof appRouter;

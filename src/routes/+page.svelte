@@ -26,6 +26,15 @@
 		isOverlay: true
 	}
 
+	let randomNumber = trpc.randomNumber.subscribe("test", {
+		onData(data) {
+			console.log('received', data);
+		},
+		onError(err) {
+			console.error('error', err);
+		},
+	});
+
 </script>
 
 <main class="container mx-auto p-4">

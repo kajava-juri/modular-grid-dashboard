@@ -1,8 +1,14 @@
 import { createTRPCSvelte } from 'trpc-svelte-query';
-import { httpBatchLink } from '@trpc/client';
+import { httpBatchLink, createTRPCClient, createWSClient, wsLink, splitLink } from '@trpc/client';
 import type { AppRouter } from '$lib/server/routes/_app';
 import { parse, stringify, uneval } from 'devalue';
 import type { inferRouterOutputs, inferRouterInputs } from '@trpc/server';
+import { browser } from '$app/environment';
+
+const getBaseUrl = () => {
+  if (browser) return '';
+  return 'http://localhost:5173'; // or your server URL
+};
 
 export const transformer = {
 	input: {
@@ -15,11 +21,26 @@ export const transformer = {
 	},
 };
 
-export const trpc = createTRPCSvelte<AppRouter>({
+
+// create persistent WebSocket connection
+const wsClient = createWSClient({
+  url: `ws://localhost:3001`
+});
+
+export const trpc = createTRPCClient<AppRouter>({
 	links: [
-		httpBatchLink({
-			url: '/api/trpc',
-			transformer,
+		splitLink({
+			condition(op) {
+				return op.type === 'subscription';
+			},
+			true: wsLink({
+				client: wsClient,
+				transformer,
+			}),
+			false: httpBatchLink({
+				url: `${getBaseUrl()}/api/trpc`,
+				transformer,
+			}),
 		}),
 	],
 });
