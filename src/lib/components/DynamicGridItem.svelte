@@ -25,7 +25,7 @@
 
 <div class="flex flex-col" style={cssStringify(style)}>
     {#if widget.type === 'line'}
-        <LinePlot {data} />
+        <LinePlot {data} lineConfig={widget.config} />
     {:else}
         <p>{widget.data}</p>
     {/if}

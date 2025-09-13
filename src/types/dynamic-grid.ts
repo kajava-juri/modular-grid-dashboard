@@ -1,3 +1,5 @@
+import type { LineConfig } from "./chart-config";
+
 export type GridConfig = {
     columns: number;
     rows: number;
@@ -20,6 +22,7 @@ export const GridItemTypes = {
 export type GridItem = {
     id: string;
     type: typeof GridItemTypes[keyof typeof GridItemTypes];
+    config: LineConfig | Record<string, unknown>;
     data: any; // Based on the type
     name: string;
     size: {
