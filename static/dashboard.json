@@ -19,6 +19,13 @@
             "id": "widget-3",
             "type": "line",
             "data": "Widget 3",
+            "dataSource": {
+                "type": "websocket",
+                "endpoint": "randomNumber",
+                "params": {
+                    "input": "test"
+                }
+            },
             "size": {
                 "width": 4,
                 "height": 1

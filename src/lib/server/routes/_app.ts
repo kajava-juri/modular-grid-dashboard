@@ -29,7 +29,7 @@ export const appRouter = router({
 		while(!opts.signal?.aborted) {
 			let data;
 			if(opts.input == "test") {
-				data = Math.random() * 100;
+				data = Math.random() * 4 - 2;
 			}
 			else if(opts.input == "data") {
 				data = "some data";
@@ -38,7 +38,7 @@ export const appRouter = router({
 				value: data,
 				timestamp: Date.now(),
 			};
-			await new Promise((resolve) => setTimeout(resolve, 200));
+			await new Promise((resolve) => setTimeout(resolve, 50));
 		}
 	})
 });

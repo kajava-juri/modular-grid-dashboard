@@ -26,14 +26,14 @@
 		isOverlay: true
 	}
 
-	let randomNumber = trpc.randomNumber.subscribe("test", {
-		onData(data) {
-			console.log('received', data);
-		},
-		onError(err) {
-			console.error('error', err);
-		},
-	});
+	// let randomNumber = trpc.randomNumber.subscribe("test", {
+	// 	onData(data) {
+	// 		//console.log('received', data);
+	// 	},
+	// 	onError(err) {
+	// 		console.error('error', err);
+	// 	},
+	// });
 
 </script>
 

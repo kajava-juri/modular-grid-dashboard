@@ -1,3 +1,4 @@
+import type { DataSource } from "@/lib/dataService";
 import type { LineConfig } from "./chart-config";
 
 export type GridConfig = {
@@ -24,6 +25,7 @@ export type GridItem = {
     type: typeof GridItemTypes[keyof typeof GridItemTypes];
     config: LineConfig | Record<string, unknown>;
     data: any; // Based on the type
+    dataSource?: DataSource;
     name: string;
     size: {
         width: number;
